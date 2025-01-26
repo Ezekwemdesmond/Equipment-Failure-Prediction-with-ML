@@ -1,0 +1,46 @@
+# Ignore Python virtual environment
+failurevenv/
+.env/
+
+# Ignore Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+
+# Ignore local environment variables
+.env
+.env.local
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore log files
+*.log
+
+
+# Ignore pipenv and poetry files
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Ignore pytest cache
+.pytest_cache/
+
+# Ignore coverage reports
+.coverage
+htmlcov/
+
+# Ignore build and distribution files
+dist/
+build/
+*.egg-info/
+
+# Ignore local development files
+local_settings.py

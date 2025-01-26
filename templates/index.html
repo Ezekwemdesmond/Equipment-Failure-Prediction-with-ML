@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Failure Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Equipment Failure Prediction</h1>
+        <p class="subtitle">Enter the equipment details to predict failure.</p>
+        <form action="/predict" method="POST">
+            <div class="form-group">
+                <label for="type">Type:</label>
+                <select id="type" name="type" required>
+                    <option value="L">Low</option>
+                    <option value="M">Medium</option>
+                    <option value="H">High</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="air_temperature">Air Temperature [K]:</label>
+                <input type="number" step="0.01" id="air_temperature" name="air_temperature" required>
+            </div>
+
+            <div class="form-group">
+                <label for="process_temperature">Process Temperature [K]:</label>
+                <input type="number" step="0.01" id="process_temperature" name="process_temperature" required>
+            </div>
+
+            <div class="form-group">
+                <label for="rotational_speed">Rotational Speed [rpm]:</label>
+                <input type="number" step="0.01" id="rotational_speed" name="rotational_speed" required>
+            </div>
+
+            <div class="form-group">
+                <label for="torque">Torque [Nm]:</label>
+                <input type="number" step="0.01" id="torque" name="torque" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tool_wear">Tool Wear [min]:</label>
+                <input type="number" step="0.01" id="tool_wear" name="tool_wear" required>
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+            <div class="prediction-result">
+                <h2>Prediction Result</h2>
+                <p class="prediction-text">{{ prediction_text }}</p>
+                <p class="response-text">{{ response_text }}</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

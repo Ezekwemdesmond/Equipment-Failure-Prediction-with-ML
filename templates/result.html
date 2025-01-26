@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Prediction Result</h1>
+        <div class="prediction-result">
+            <p class="prediction-text">{{ prediction_text }}</p>
+            <p class="response-text">{{ response_text }}</p>
+        </div>
+        <!-- Add a "Go Back to Home Page" link -->
+        <a href="{{ url_for('home') }}" class="back-button">Go Back to Home Page</a>
+    </div>
+</body>
+</html>

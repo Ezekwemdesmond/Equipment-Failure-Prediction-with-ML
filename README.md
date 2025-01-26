@@ -31,6 +31,23 @@ It is designed for predictive maintenance, helping businesses reduce downtime an
 
 ## Getting Started
 
+### Project Structure
+```bash
+equipment-failure-prediction/
+├── app.py                  # Flask application
+├── model.py                # Script to train and save the model
+├── requirements.txt        # List of dependencies
+├── README.md               # Project documentation
+├── templates/              # HTML templates
+│   ├── index.html          # Home page
+│   └── result.html         # Result page
+├── static/                 # Static files (CSS, images)
+│   └── style.css           # CSS for styling the web app
+└── models/                 # Saved models and preprocessing pipeline
+    ├── preprocessing_pipeline.pkl
+    └── failure_prediction_model.pkl
+```
+
 ### Prerequisites
 
 - Python 3.x
@@ -58,7 +75,8 @@ It is designed for predictive maintenance, helping businesses reduce downtime an
 
 2. Open your web browser and navigate to `http://127.0.0.1:5000`.
 
-3. Upload your dataset and view the predictions.
+3. Enter the equipment details (e.g., type, air temperature, process temperature, rotational speed, torque, and tool wear). Click the Predict button.
+4. The application will display the prediction (Failure or No Failure) and the probability of failure. A response message will suggest whether maintenance is required.
 
 ## Data
 
@@ -71,33 +89,10 @@ The dataset used for training the model is located in `predictive_maintenance.cs
 
 ## Model Training
 
-The model training script is located in `model.py`. This script handles:
-
-- Data preprocessing
-- Feature selection
-- Model training using various algorithms
-- Evaluation of model performance
-
+The model training script is located in `model.py`. 
 To train the model, run:
 ```bash
 python model.py
-```
-
-### Project Structure
-```bash
-equipment-failure-prediction/
-├── app.py                  # Flask application
-├── model.py                # Script to train and save the model
-├── requirements.txt        # List of dependencies
-├── README.md               # Project documentation
-├── templates/              # HTML templates
-│   ├── index.html          # Home page
-│   └── result.html         # Result page
-├── static/                 # Static files (CSS, images)
-│   └── style.css           # CSS for styling the web app
-└── models/                 # Saved models and preprocessing pipeline
-    ├── preprocessing_pipeline.pkl
-    └── failure_prediction_model.pkl
 ```
 
 ## Web Application
@@ -105,7 +100,7 @@ equipment-failure-prediction/
 The web application is built using Flask and allows users to:
 
 - Upload data for prediction
-- View model predictions and performance metrics
+- View model predictions
 
 
 ## Contributing
@@ -122,4 +117,4 @@ Contributions are welcome! Please follow these steps:
 
 - [Scikit-learn](https://scikit-learn.org/stable/) for machine learning tools.
 - [Flask](https://flask.palletsprojects.com/) for web framework support.
-- Contributors and maintainers of the project.
+- Dataset: https://www.kaggle.com/datasets/shivamb/machine-predictive-maintenance-classification

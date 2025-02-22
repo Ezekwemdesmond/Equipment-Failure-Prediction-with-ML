@@ -2,8 +2,12 @@ import os
 from pathlib import Path
 import logging
 
-logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s:')
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,   # Set the logging level to INFO
+    format='[%(asctime)s]: %(message)s:')  # Define the log format
 
+# Define the project name and list of files and folders to create
 project_name = 'EquipmentFailurePrediction'
 
 list_of_files = [

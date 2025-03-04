@@ -54,4 +54,8 @@ types-PyYAML
 
 ensure
 
+lightgbm
+
+imbalanced-learn
+
 -e .

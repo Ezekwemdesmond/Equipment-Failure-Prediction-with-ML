@@ -24,3 +24,4 @@ logging.basicConfig(
 
 # Create a custom logger
 logger = logging.getLogger("EquipmentFailurePredictionLogger")
+logger.info("Logger is successfully configured.")

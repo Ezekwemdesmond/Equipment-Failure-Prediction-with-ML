@@ -4,58 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Equipment Failure Prediction</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
-<body>
-    <div class="container">
-        <h1>Equipment Failure Prediction</h1>
-        <p class="subtitle">Enter the equipment details to predict failure.</p>
-        <form action="/predict" method="POST">
-            <div class="form-group">
-                <label for="type">Type:</label>
-                <select id="type" name="type" required>
-                    <option value="L">Low</option>
-                    <option value="M">Medium</option>
-                    <option value="H">High</option>
-                </select>
-            </div>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-cogs me-2"></i>
+                Equipment Prediction System
+            </a>
+        </div>
+    </nav>
 
-            <div class="form-group">
-                <label for="air_temperature">Air Temperature [K]:</label>
-                <input type="number" step="0.01" id="air_temperature" name="air_temperature" required>
-            </div>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="form-container">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-chart-line prediction-icon"></i>
+                        <h1 class="form-header">Equipment Failure Prediction</h1>
+                        <p class="text-muted">Enter equipment parameters to predict potential failures</p>
+                    </div>
 
-            <div class="form-group">
-                <label for="process_temperature">Process Temperature [K]:</label>
-                <input type="number" step="0.01" id="process_temperature" name="process_temperature" required>
-            </div>
+                    <form action="{{ url_for('predict') }}" method="POST" class="needs-validation" novalidate>
+                        <!-- Type Field -->
+                        <div class="mb-4">
+                            <label for="type" class="form-label">
+                                <i class="fas fa-tag me-2"></i>Equipment Type
+                            </label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="" selected disabled>Select equipment type...</option>
+                                <option value="L">Low Duty</option>
+                                <option value="M">Medium Duty</option>
+                                <option value="H">Heavy Duty</option>
+                            </select>
+                            <div class="invalid-feedback">Please select an equipment type.</div>
+                        </div>
 
-            <div class="form-group">
-                <label for="rotational_speed">Rotational Speed [rpm]:</label>
-                <input type="number" step="0.01" id="rotational_speed" name="rotational_speed" required>
-            </div>
+                        <div class="row">
+                            <!-- Air Temperature Field -->
+                            <div class="col-md-6 mb-4">
+                                <label for="air_temperature" class="form-label">
+                                    <i class="fas fa-temperature-high me-2"></i>Air Temperature [K]
+                                </label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" class="form-control" id="air_temperature" 
+                                           name="air_temperature" required min="0" placeholder="Enter air temperature">
+                                    <span class="input-group-text">K</span>
+                                </div>
+                                <div class="form-text">Range: 0-1000K</div>
+                            </div>
 
-            <div class="form-group">
-                <label for="torque">Torque [Nm]:</label>
-                <input type="number" step="0.01" id="torque" name="torque" required>
-            </div>
+                            <!-- Process Temperature Field -->
+                            <div class="col-md-6 mb-4">
+                                <label for="process_temperature" class="form-label">
+                                    <i class="fas fa-thermometer-half me-2"></i>Process Temperature [K]
+                                </label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" class="form-control" id="process_temperature" 
+                                           name="process_temperature" required min="0" placeholder="Enter process temperature">
+                                    <span class="input-group-text">K</span>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="form-group">
-                <label for="tool_wear">Tool Wear [min]:</label>
-                <input type="number" step="0.01" id="tool_wear" name="tool_wear" required>
-            </div>
+                        <div class="row">
+                            <!-- Rotational Speed Field -->
+                            <div class="col-md-6 mb-4">
+                                <label for="rotational_speed" class="form-label">
+                                    <i class="fas fa-sync me-2"></i>Rotational Speed [rpm]
+                                </label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" class="form-control" id="rotational_speed" 
+                                           name="rotational_speed" required min="0" placeholder="Enter rotational speed">
+                                    <span class="input-group-text">rpm</span>
+                                </div>
+                            </div>
 
-            <button type="submit">Predict</button>
-        </form>
+                            <!-- Torque Field -->
+                            <div class="col-md-6 mb-4">
+                                <label for="torque" class="form-label">
+                                    <i class="fas fa-circle-notch me-2"></i>Torque [Nm]
+                                </label>
+                                <div class="input-group">
+                                    <input type="number" step="0.01" class="form-control" id="torque" 
+                                           name="torque" required min="0" placeholder="Enter torque">
+                                    <span class="input-group-text">Nm</span>
+                                </div>
+                            </div>
+                        </div>
 
-        {% if prediction_text %}
-            <div class="prediction-result">
-                <h2>Prediction Result</h2>
-                <p class="prediction-text">{{ prediction_text }}</p>
-                <p class="response-text">{{ response_text }}</p>
+                        <!-- Tool Wear Field -->
+                        <div class="mb-4">
+                            <label for="tool_wear" class="form-label">
+                                <i class="fas fa-tools me-2"></i>Tool Wear [min]
+                            </label>
+                            <div class="input-group">
+                                <input type="number" step="0.01" class="form-control" id="tool_wear" 
+                                       name="tool_wear" required min="0" placeholder="Enter tool wear time">
+                                <span class="input-group-text">min</span>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="text-center mt-4">
+                            <button type="submit" class="btn btn-predict">
+                                <i class="fas fa-calculator me-2"></i>
+                                <span>Generate Prediction</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        {% endif %}
+        </div>
     </div>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container text-center">
+            <span class="text-muted">© 2025 Equipment Failure Prediction System</span>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Form Validation Script -->
+    <script>
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+        })()
+    </script>
 </body>
 </html>

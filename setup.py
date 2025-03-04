@@ -24,7 +24,8 @@ setup(
     long_description=open("README.md").read(),  
     long_description_content_type="text/markdown",  
     url="https://github.com/Ezekwemdesmond/Equipment-Failure-Prediction-with-ML",  
-    packages=find_packages(),  
+    packages=find_packages(where="src"),  # Look for packages in the `src` directory
+    package_dir={"": "src"},  # Map the root of the package to the `src` directory
     install_requires=get_requirements("requirements.txt"),  
     classifiers=[
         "Programming Language :: Python :: 3",

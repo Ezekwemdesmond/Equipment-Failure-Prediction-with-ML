@@ -1,0 +1,43 @@
+# Data Ingestion Configuration
+data_ingestion:
+  root_dir: artifacts/data_ingestion  # Directory to store ingested data
+  source_data_path: data/raw/predictive_maintenance.csv  # Path to the raw dataset
+  train_data_path: artifacts/data_ingestion/train.csv  # Path to save the training data
+  test_data_path: artifacts/data_ingestion/test.csv  # Path to save the testing data
+  test_size: 0.2  # Percentage of data to use for testing
+  random_state: 42  # Random seed for reproducibility
+
+# Data Transformation Configuration
+data_transformation:
+  root_dir: artifacts/data_transformation  # Directory to store transformed data
+  train_data_path: artifacts/data_ingestion/train.csv  # Path to the training data
+  test_data_path: artifacts/data_ingestion/test.csv  # Path to the testing data
+  preprocessor_path: artifacts/data_transformation/preprocessor.pkl  # Path to save the preprocessor object
+  target_column: "Target"  # Name of the target column
+  numerical_columns:  # List of numerical columns
+    - "Air temperature [K]"
+    - "Process temperature [K]"
+    - "Rotational speed [rpm]"
+    - "Torque [Nm]"
+    - "Tool wear [min]"
+  categorical_columns:  # List of categorical columns
+    - "Type"
+
+# Model Training Configuration
+model_trainer:
+  root_dir: artifacts/model_trainer  # Directory to store trained models
+  train_data_path: artifacts/data_transformation/transformed_train.csv  # Path to the transformed training data
+  test_data_path: artifacts/data_transformation/transformed_test.csv    # Path to the transformed testing data
+  model_path: artifacts/model_trainer/best_model.pkl  # Path to save the best model
+  target_column: "Target"  # Name of the target column
+  random_state: 42  # Random seed for reproducibility
+  test_size: 0.2  # Percentage of data to use for validation
+  evaluation_metric: "roc_auc"  # Metric to evaluate models (e.g., "accuracy", "f1", "roc_auc")
+  params_file: "configs/params.yaml"
+
+# Model Evaluation Configuration
+model_evaluation:
+  root_dir: artifacts/model_evaluation  # Directory to save evaluation results
+  test_data_path: artifacts/data_transformation/transformed_test.csv  # Path to the test data
+  model_path: artifacts/model_trainer/best_model.pkl  # Path to the trained model
+  target_column: "Target"  # Name of the target column

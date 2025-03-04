@@ -1,0 +1,15 @@
+Best Model: LightGBM
+Evaluation Metric: roc_auc
+Pipeline Steps:
+- smote
+- model
+
+Feature Names:
+- num__Air temperature _K_
+- num__Process temperature _K_
+- num__Rotational speed _rpm_
+- num__Torque _Nm_
+- num__Tool wear _min_
+- cat__Type_H
+- cat__Type_L
+- cat__Type_M
